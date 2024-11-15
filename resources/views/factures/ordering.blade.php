@@ -151,60 +151,81 @@
                 });
             </script>
 
-<script>
-    const addedProducts = {}; // Objeto para rastrear las cantidades agregadas
+        <script>
+            const addedProducts = {};
 
-    function addProduct(dishId) {
-        const quantityElement = document.querySelector(`#quantity-${dishId}`);
-        const unitsElement = document.querySelector(`#units-${dishId}`);
-        const addButton = document.querySelector(`#add-btn-${dishId}`);
-        const removeButton = document.querySelector(`#remove-btn-${dishId}`);
-        const maxUnits = parseInt(document.querySelector(`.product-item[data-dish-id="${dishId}"]`).getAttribute('data-max-units'));
+            function addProduct(dishId) {
+                const quantityElement = document.querySelector(`#quantity-${dishId}`);
+                const unitsElement = document.querySelector(`#units-${dishId}`);
+                const addButton = document.querySelector(`#add-btn-${dishId}`);
+                const removeButton = document.querySelector(`#remove-btn-${dishId}`);
+                const maxUnits = parseInt(document.querySelector(`.product-item[data-dish-id="${dishId}"]`).getAttribute('data-max-units')) || 0;
 
-        let currentAdded = addedProducts[dishId] || 0;
-        let availableUnits = maxUnits - currentAdded;
+                let currentAdded = addedProducts[dishId] || 0;
+                let availableUnits = maxUnits - currentAdded;
 
-        if (availableUnits > 0) {
-            currentAdded += 1;
-            addedProducts[dishId] = currentAdded;
+                if (maxUnits === 0) {
+                    alert("Este producto no tiene unidades disponibles.");
+                    addButton.disabled = true;
+                    return;
+                }
 
-            // Actualizamos los contadores
-            quantityElement.textContent = currentAdded;
-            unitsElement.textContent = `(Unidades: ${maxUnits - currentAdded})`;
+                if (availableUnits <= 0) {
+                    alert("No hay más unidades disponibles para agregar.");
+                    addButton.disabled = true;
+                    return;
+                }
+                currentAdded += 1;
+                addedProducts[dishId] = currentAdded;
 
-            removeButton.disabled = false;
+                quantityElement.textContent = currentAdded;
+                unitsElement.textContent = `(Unidades: ${maxUnits - currentAdded})`;
 
-            if (currentAdded >= maxUnits) {
-                addButton.disabled = true;
+                removeButton.disabled = false;
+
+                if (currentAdded >= maxUnits) {
+                    addButton.disabled = true;
+                }
             }
-        }
-    }
 
-    function removeProduct(dishId) {
-        const quantityElement = document.querySelector(`#quantity-${dishId}`);
-        const unitsElement = document.querySelector(`#units-${dishId}`);
-        const addButton = document.querySelector(`#add-btn-${dishId}`);
-        const removeButton = document.querySelector(`#remove-btn-${dishId}`);
-        const maxUnits = parseInt(document.querySelector(`.product-item[data-dish-id="${dishId}"]`).getAttribute('data-max-units'));
+            function removeProduct(dishId) {
+                const quantityElement = document.querySelector(`#quantity-${dishId}`);
+                const unitsElement = document.querySelector(`#units-${dishId}`);
+                const addButton = document.querySelector(`#add-btn-${dishId}`);
+                const removeButton = document.querySelector(`#remove-btn-${dishId}`);
+                const maxUnits = parseInt(document.querySelector(`.product-item[data-dish-id="${dishId}"]`).getAttribute('data-max-units')) || 0;
 
-        let currentAdded = addedProducts[dishId] || 0;
+                let currentAdded = addedProducts[dishId] || 0;
 
-        if (currentAdded > 0) {
-            currentAdded -= 1;
-            addedProducts[dishId] = currentAdded;
+                if (currentAdded > 0) {
+                    currentAdded -= 1;
+                    addedProducts[dishId] = currentAdded;
 
-            // Actualizamos los contadores
-            quantityElement.textContent = currentAdded;
-            unitsElement.textContent = `(Unidades: ${maxUnits - currentAdded})`;
 
-            addButton.disabled = false;
+                    quantityElement.textContent = currentAdded;
+                    unitsElement.textContent = `(Unidades: ${maxUnits - currentAdded})`;
 
-            if (currentAdded === 0) {
-                removeButton.disabled = true;
+                    addButton.disabled = false;
+
+                    if (currentAdded === 0) {
+                        removeButton.disabled = true;
+                    }
+                }
             }
-        }
-    }
-</script>
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const products = document.querySelectorAll('.product-item');
+                products.forEach(product => {
+                    const dishId = product.getAttribute('data-dish-id');
+                    const addButton = document.querySelector(`#add-btn-${dishId}`);
+                    const maxUnits = parseInt(product.getAttribute('data-max-units')) || 0;
+
+                    if (maxUnits === 0) {
+                        addButton.disabled = true; // Deshabilitar botón de agregar si no hay unidades
+                    }
+                });
+            });
+        </script>
 
         </div>
 
