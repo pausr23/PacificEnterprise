@@ -18,7 +18,7 @@
 
                 <!-- Mobile Image -->
                 <img
-                    class="mx-auto my-10 block md:hidden w-[50%] transition-transform duration-500 ease-in-out transform hover:scale-110"
+                    class="mx-auto my-10 block md:hidden w-[50%] transition-transform duration-500 ease-in-out transform hover:scale-110 mb-24"
                     src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
                     alt="Pacific-Enterprise"
                 />
