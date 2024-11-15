@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.bg-color{ background: #16161A}
+
+.secondary-color{background: #323035}
+
+.font-main{
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d6eabb;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+#earningsChartContainer, #ordersChartContainer {
+    height: 300px;
+}
+
+@media (min-width: 1024px) {
+    #earningsChartContainer, #ordersChartContainer {
+        height: 250px;
+    }
+}
+
+.chart-container {
+    width: 100%;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .chart-container {
+        height: 300px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .chart-container {
+        height: 250px;
+    }
+}
+
+.swiper-button-white {
+    color: rgb(215, 215, 215);
+}
+
+.swiper-pagination-white .swiper-pagination-bullet {
+    background: rgb(215, 215, 215);
+}
+
+.swiper-pagination-white .swiper-pagination-bullet-active {
+    background: gray; 
+}
+
+input:checked + .slider {
+    background-color: #F19DB4;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+select {
+    color: white; 
+    background-color: #323035; 
+}
+
+select:focus {
+    background-color: #16161A;
+    color: white; 
+}
+
+.products-container::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.products-container::-webkit-scrollbar-thumb {
+    background-color: #ceccce; 
+    border-radius: 10px; 
+}
+
+.products-container::-webkit-scrollbar-track {
+    background: #323035; 
+}
+
+#mobile-checkbox:not(:checked) ~ #sidebar-menu {
+    transform: translateX(-100%);
+}
+
+#mobile-checkbox:checked ~ #sidebar-menu {
+    transform: translateX(0);
+}
+
+@media (min-width: 1024px) {
+    #mobile-checkbox:checked ~ #sidebar-menu {
+        transform: translateX(0);
+    }
+}
