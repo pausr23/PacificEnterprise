@@ -35,19 +35,22 @@
                 <option value="" disabled selected>Subcategoría</option>
             </select>
 
-            <div id="dishes-list"
-                class="grid lg:grid-cols-4 xxs:grid-cols-1 gap-3 mr-12 md:my-auto products-container overflow-y-auto"
-                style="max-height: 315px;">
+            <div id="dishes-list" class="grid lg:grid-cols-4 xxs:grid-cols-1 gap-3 mr-12 md:my-auto products-container overflow-y-auto" style="max-height: 315px;">
                 @foreach($dishes as $dish)
                     <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
-                        data-dish-id="{{ $dish->id }}" 
+                        data-dish-id="{{ $dish->id }}"
                         data-subcategory-id="{{ $dish->subcategories_id }}"
-                        data-dish-price="{{ $dish->sale_price}}" 
+                        data-dish-price="{{ $dish->sale_price }}"
                         data-dish-title="{{ strtolower($dish->title) }}"
+                        data-max-units="{{ $dish->units }}"
                         style="border-left: 6px solid #8FC08B;">
                         <div class="flex flex-col h-full justify-between">
                             <div>
-                                <p class="text-xs font-extralight mt-2 mb-3">{{ $dish->subcategory->name }}</p>
+                                <!-- Subcategoría y unidades disponibles -->
+                                <p class="text-xs font-extralight mt-2 mb-3 flex items-center">
+                                    {{ $dish->subcategory->name }}
+                                    <span id="units-{{ $dish->id }}" class="text-gray-300">(Unidades: {{ $dish->units }})</span>
+                                </p>
                                 <h2 class="font-bold text-sm mb-1">{{ $dish->title }}</h2>
                                 <p class="font-extralight text-sm mb-3">₡{{ number_format($dish->sale_price, 2) }}</p>
                             </div>
@@ -60,8 +63,7 @@
                                         src="https://img.icons8.com/ios-filled/50/FFFFFF/plus-math.png" alt="plus-math" />
                                 </button>
 
-                                <span id="quantity-{{ $dish->id }}"
-                                    class="text-xs mx-2 font-light">{{ $dish->units }}</span>
+                                <span id="quantity-{{ $dish->id }}" class="text-xs mx-2 font-light">0</span>
 
                                 <button id="remove-btn-{{ $dish->id }}"
                                     class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center"
@@ -69,7 +71,6 @@
                                     <img width="50" height="50"
                                         src="https://img.icons8.com/ios-filled/50/FFFFFF/minus-math.png" alt="minus-math" />
                                 </button>
-
                             </div>
                         </div>
                     </div>
@@ -150,71 +151,60 @@
                 });
             </script>
 
-            <script>
-                const addedProducts = {};
+<script>
+    const addedProducts = {}; // Objeto para rastrear las cantidades agregadas
 
-                document.addEventListener('DOMContentLoaded', function () {
-                    const products = document.querySelectorAll('.product-item');
-                    products.forEach(product => {
-                        const dishId = product.getAttribute('data-dish-id');
-                        const quantityElement = document.querySelector(`#quantity-${dishId}`);
-                        const addButton = document.querySelector(`#add-btn-${dishId}`);
-                        const currentQuantity = parseInt(quantityElement.textContent) || 0;
+    function addProduct(dishId) {
+        const quantityElement = document.querySelector(`#quantity-${dishId}`);
+        const unitsElement = document.querySelector(`#units-${dishId}`);
+        const addButton = document.querySelector(`#add-btn-${dishId}`);
+        const removeButton = document.querySelector(`#remove-btn-${dishId}`);
+        const maxUnits = parseInt(document.querySelector(`.product-item[data-dish-id="${dishId}"]`).getAttribute('data-max-units'));
 
-                        if (currentQuantity === 0) {
-                            addButton.disabled = true;
-                        }
-                    });
-                });
+        let currentAdded = addedProducts[dishId] || 0;
+        let availableUnits = maxUnits - currentAdded;
 
-                function addProduct(dishId, maxUnits) {
-                    const quantityElement = document.querySelector(`#quantity-${dishId}`);
-                    const addButton = document.querySelector(`#add-btn-${dishId}`);
-                    const removeButton = document.querySelector(`#remove-btn-${dishId}`);
-                    let currentQuantity = parseInt(quantityElement.textContent) || 0;
+        if (availableUnits > 0) {
+            currentAdded += 1;
+            addedProducts[dishId] = currentAdded;
 
-                    if (!addedProducts[dishId]) {
-                        addedProducts[dishId] = 0;
-                    }
+            // Actualizamos los contadores
+            quantityElement.textContent = currentAdded;
+            unitsElement.textContent = `(Unidades: ${maxUnits - currentAdded})`;
 
-                    if (currentQuantity > 0) {
-                        currentQuantity -= 1;
-                        quantityElement.textContent = currentQuantity;
+            removeButton.disabled = false;
 
-                        addedProducts[dishId] += 1;
+            if (currentAdded >= maxUnits) {
+                addButton.disabled = true;
+            }
+        }
+    }
 
-                        if (addedProducts[dishId] > 0) {
-                            removeButton.disabled = false;
-                        }
+    function removeProduct(dishId) {
+        const quantityElement = document.querySelector(`#quantity-${dishId}`);
+        const unitsElement = document.querySelector(`#units-${dishId}`);
+        const addButton = document.querySelector(`#add-btn-${dishId}`);
+        const removeButton = document.querySelector(`#remove-btn-${dishId}`);
+        const maxUnits = parseInt(document.querySelector(`.product-item[data-dish-id="${dishId}"]`).getAttribute('data-max-units'));
 
-                        if (currentQuantity === 0) {
-                            addButton.disabled = true;
-                        }
-                    }
-                }
+        let currentAdded = addedProducts[dishId] || 0;
 
-                function removeProduct(dishId, maxUnits) {
-                    const quantityElement = document.querySelector(`#quantity-${dishId}`);
-                    const addButton = document.querySelector(`#add-btn-${dishId}`);
-                    const removeButton = document.querySelector(`#remove-btn-${dishId}`);
-                    let currentQuantity = parseInt(quantityElement.textContent) || 0;
+        if (currentAdded > 0) {
+            currentAdded -= 1;
+            addedProducts[dishId] = currentAdded;
 
-                    if (addedProducts[dishId] > 0) {
-                        currentQuantity += 1;
-                        quantityElement.textContent = currentQuantity;
+            // Actualizamos los contadores
+            quantityElement.textContent = currentAdded;
+            unitsElement.textContent = `(Unidades: ${maxUnits - currentAdded})`;
 
-                        addedProducts[dishId] -= 1;
+            addButton.disabled = false;
 
-                        if (addedProducts[dishId] === 0) {
-                            removeButton.disabled = true;
-                        }
-
-                        if (currentQuantity > 0) {
-                            addButton.disabled = false;
-                        }
-                    }
-                }
-            </script>
+            if (currentAdded === 0) {
+                removeButton.disabled = true;
+            }
+        }
+    }
+</script>
 
         </div>
 
@@ -413,13 +403,20 @@
                         document.getElementById('addedItemsInput').value = JSON.stringify(addedItems);
 
                         // Verificar si hay productos añadidos
+                        const paymentMethod = document.getElementById('paymentMethodInput').value;
+                        // Verificar si hay productos añadidos
                         if (addedItems.length === 0) {
                             event.preventDefault();  // Evita el envío del formulario
                             alert('Por favor, agregue al menos un producto antes de facturar.');
                             return;
                         }
 
-                        const paymentMethod = document.getElementById('paymentMethodInput').value;
+                        if (!paymentMethod) {
+                            event.preventDefault();  // Evita el envío del formulario
+                            alert('Por favor, seleccione un método de pago antes de facturar.');
+                            return;
+                        }
+
                         const voucherNumber = document.getElementById('voucher-number').value;
 
                         // Verificar si el método de pago es Tarjeta (2) o Sinpe (3) y si el número de voucher está vacío
