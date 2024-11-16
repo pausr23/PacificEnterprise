@@ -1,8 +1,11 @@
 @extends('dishes.layout')
 @section('content')
-<div class="lg:mt-0 mt-12">
-        <!-- Logo de la Empresa -->
-        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="grid lg:grid-cols-[20%,80%] lg:pl-6 pl-20">
+
+    <!-- Menú lateral -->
+    <div class="mr-5">
+        @include('components.sidebar-link')
+    </div>
 
     @if ($errors->any())
         <div class="bg-red-300 text-red-800 border border-red-600 rounded-lg p-2 mb-2 lg:w-[70%] w-[20%]">
@@ -16,13 +19,13 @@
 
     <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:pl-4 xxs:ml-[-4%]">
+        <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:pl-4 xxs:ml-[-4%] mt-10">
 
             <div class="grid">
 
                 <h1 class="text-2xl font-bold text-white font-main xxs:my-4 xxs:ml-[10%]">Añade un nuevo evento</h1>
 
-                <div class="grid mb-2">
+                <div class="grid mb-2 lg:mt-10">
                     <label class="block mb-2 font-medium text-white font-main" for="title">Título</label>
                     <input id="title" class="secondary-color border border-gray-300 text-sm rounded-lg block w-80 p-2.5 text-white"
                         type="text" name="title" placeholder="Título del evento" value="{{ old('title') }}" required>
@@ -48,7 +51,7 @@
             <!-- Sección 2 -->
             <div>
 
-                <div class="grid mb-2">
+                <div class="grid mb-2 lg:mt-10">
                     <label for="image" class="block mb-2 font-medium text-white font-main">Imagen</label>
                     <input type="file" accept=".jpg, .png" id="image"
                         class="text-white secondary-color border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[61%] p-2.5"

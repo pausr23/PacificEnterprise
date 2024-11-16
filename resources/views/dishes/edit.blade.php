@@ -1,9 +1,14 @@
 @extends('dishes.layout')
 
 @section('content')
-    <div class="lg:mt-0 mt-12">
-        <!-- Logo de la Empresa -->
-        <img class="w-56 xxs:mx-2 m-12 lg:block hidden" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png" alt="Pacific-Enterprise" border="0">
+<div class="grid lg:grid-cols-[20%,80%] lg:pl-6 pl-20">
+
+    <!-- Menú lateral -->
+    <div class="mr-5">
+        @include('components.sidebar-link')
+    </div>
+
+    <div class="lg:mt-8 mt-12">
 
         <!-- Título y Botón Atrás -->
         <div class="flex justify-center items-center mb-10 lg:-mr-0 sm:-mr-16">
@@ -29,6 +34,7 @@
         </form>
 
     </div>
+</div>
 
     <script>
         const subcategoriesData = @json($subcategories);

@@ -1,4 +1,4 @@
-@extends('dishes.layout')
+@extends('factures.layout')
 
 @section('content')
 <!DOCTYPE html>
@@ -56,19 +56,26 @@
 </head>
 
 <body>
-    <!-- Logo de la empresa -->
-    
-
-   
-
     <!-- Comprobación de si el archivo existe -->
     @if (isset($filePath))
         <!-- iframe oculto para cargar el archivo de la factura -->
         <iframe src="{{ asset($filePath) }}" style="display:none;" title="Factura del archivo cargado"></iframe>
 
-
         <!-- Tabla con los detalles de los productos -->
         <div id="back-button-container" class="flex justify-center mb-10"></div>
+
+        <!-- Encabezado con líneas divisorias -->
+        <h1 class="font-bold text-center">Nombre</h1>
+        <h2 class="font-bold text-center">Dirección</h2>
+        <h2 class="font-bold text-center">Correo</h2>
+        <h2 class="font-bold text-center">Teléfono</h2>
+  
+        <hr> <!-- Línea horizontal después de "Teléfono" -->
+
+        <h2 class="font-bold mt-2 mb-2">Número de factura:</h2>
+
+        <hr> <!-- Línea horizontal después de "Teléfono" -->
+
         <table>
             <thead>
                 <tr>
@@ -77,8 +84,7 @@
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tbody class=" ml-4"> 
-            
+            <tbody class="ml-4">
                 @foreach ($addedItemsWithDetails as $item)
                     <tr>
                         <td>{{ $item['quantity'] }}</td>
@@ -93,6 +99,10 @@
             </tbody>
         </table>
 
+        <!-- Nota con línea divisoria encima -->
+        <hr> <!-- Línea horizontal antes de "Nota" -->
+        <p class="font-bold text-center mt-2">Nota</p>
+
     @else
         <!-- Mensaje si no se encuentra el archivo -->
         <p>No se encontró el archivo de la factura.</p>
@@ -100,12 +110,11 @@
 
     <!-- Contenedor para el botón de regreso -->
 
-
     <!-- Script para agregar el botón de regreso después de un tiempo -->
-        <script>
+    <script>
         setTimeout(function () {
             const backButtonContainer = document.getElementById('back-button-container');
-    
+
             // Crear el botón "Regresar"
             const backButton = document.createElement('button');
             backButton.textContent = 'Regresar';
@@ -114,7 +123,7 @@
                 window.location.href = '{{ route('factures.ordering') }}';
             };
             backButtonContainer.appendChild(backButton);
-    
+
             // Crear el botón "Imprimir"
             const printButton = document.createElement('button');
             printButton.textContent = 'Imprimir';
@@ -126,6 +135,7 @@
         }, 1000); // 1000 milisegundos = 1 segundo
     </script>
 </body>
+
 
 </html>
 @endsection
