@@ -24,7 +24,7 @@
         <div class="mt-4 text-white">
             @foreach ([
                 'Número de teléfono' => $supplier->phone_number,
-                'Correo electrónico' => $supplier->email ?? 'No proporcionado',  {{-- Muestra un valor por defecto si no hay email --}}
+                'Correo electrónico' => $supplier->email ?? 'No proporcionado',  
                 'Notas adicionales' => $supplier->note ?? 'No hay notas disponibles'
             ] as $label => $value)
                 <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4">

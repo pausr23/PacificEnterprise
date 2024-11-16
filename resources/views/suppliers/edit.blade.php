@@ -36,7 +36,7 @@
                 @include('components.input-suppliersEdit', [
                     'label' => 'Nombre',
                     'name' => 'name',
-                    'value' => old('name', $supplier->name),  {{-- Usamos old() para mantener los valores si el formulario tiene errores --}}
+                    'value' => old('name', $supplier->name),  
                     'placeholder' => 'Nombre del proveedor'
                 ])
 
