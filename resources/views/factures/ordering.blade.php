@@ -13,9 +13,12 @@
     <div class="grid lg:grid-cols-[65%,30%] lg:ml-0 md:ml-[3%] xxs:grid-cols-1">
 
         <div>
-            <div class="grid">
-                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-xs font-light h-8 text-left text-white lg:w-[95%] md:w-[94%] xxs:w-[87%]"
+            <div class="grid lg:grid-cols-[65%,30%] lg:gap-x-4">
+                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-sm font-light h-8 text-left text-white lg:w-[95%] md:w-[94%] xxs:w-[87%]"
                     id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
+                    <button id="show-all-btn" class="font-semibold p-2 lg:p-0 mt-8 lg:mt-0 bg-white lg:place-self-end lg:mr-6 rounded-md w-56 lg:h-8 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
+                        Mostrar todos los productos
+                    </button>
             </div>
 
             <div class="grid lg:grid-cols-2 xxs:grid-cols-1 gap-3 mr-12 mt-8">
@@ -39,6 +42,7 @@
                 @foreach($dishes as $dish)
                     <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
                         data-dish-id="{{ $dish->id }}"
+                        data-category-id="{{ $dish->dishes_categories_id }}"
                         data-subcategory-id="{{ $dish->subcategories_id }}"
                         data-dish-price="{{ $dish->sale_price }}"
                         data-dish-title="{{ strtolower($dish->title) }}"
@@ -49,7 +53,7 @@
                                 <!-- Subcategoría y unidades disponibles -->
                                 <p class="text-xs font-extralight mt-2 mb-3 flex items-center">
                                     {{ $dish->subcategory->name }}
-                                    <span id="units-{{ $dish->id }}" class="text-gray-300">(Unidades: {{ $dish->units }})</span>
+                                    <span id="units-{{ $dish->id }}" class="text-gray-300 ml-2">(Unidades: {{ $dish->units }})</span>
                                 </p>
                                 <h2 class="font-bold text-sm mb-1">{{ $dish->title }}</h2>
                                 <p class="font-extralight text-sm mb-3">₡{{ number_format($dish->sale_price, 2) }}</p>
@@ -83,8 +87,11 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     const categories = @json($categories);
                     const subcategorySelect = document.getElementById('subcategory-select');
-                    const productsContainer = document.querySelector('.products-container');
+                    const products = document.querySelectorAll('.product-item');
+                    const showAllButton = document.getElementById('show-all-btn');
 
+
+                    const initialBorderColor = '#8FC08B';
                     const colors = ['#FFFF9F', '#CDA0CB', '#B0E1DF', '#F19DB4'];
 
                     document.querySelectorAll('.category-button').forEach(function (categoryDiv, index) {
@@ -95,18 +102,46 @@
                             const categoryId = this.getAttribute('data-id');
                             const selectedCategory = categories.find(category => category.id == categoryId);
 
-                            subcategorySelect.innerHTML = '';
+                            updateSubcategoryMenu(selectedCategory);
 
-                            if (selectedCategory) {
-                                const categoryOption = document.createElement('option');
-                                categoryOption.value = "";
-                                categoryOption.textContent = selectedCategory.name;
-                                categoryOption.disabled = true;
-                                categoryOption.selected = true;
-                                subcategorySelect.appendChild(categoryOption);
-                            }
+                            applyBorderColorToProducts(color);
 
-                            if (selectedCategory && selectedCategory.subcategories.length > 0) {
+                            filterProductsByCategory(categoryId);
+                        });
+                    });
+
+                    showAllButton.addEventListener('click', function () {
+                        subcategorySelect.value = '';
+                        products.forEach(function (product) {
+                            product.style.display = 'block';
+                        });
+
+                        applyBorderColorToProducts(initialBorderColor);
+                    });
+
+                    function applyBorderColorToProducts(color) {
+                        products.forEach(function (product) {
+                            product.style.borderLeft = `6px solid ${color}`;
+                        });
+                    }
+
+                    subcategorySelect.addEventListener('change', function () {
+                        const selectedSubcategoryId = this.value;
+                        filterProductsBySubcategory(selectedSubcategoryId);
+                    });
+
+                    function updateSubcategoryMenu(selectedCategory) {
+                        subcategorySelect.innerHTML = '';
+
+                        if (selectedCategory) {
+                            const categoryOption = document.createElement('option');
+                            categoryOption.value = "";
+                            categoryOption.textContent = selectedCategory.name;
+                            categoryOption.disabled = true;
+                            categoryOption.selected = true;
+                            subcategorySelect.appendChild(categoryOption);
+
+                            if (selectedCategory.subcategories.length > 0) {
                                 selectedCategory.subcategories.forEach(function (subcategory) {
                                     const option = document.createElement('option');
                                     option.value = subcategory.id;
@@ -114,34 +149,44 @@
                                     subcategorySelect.appendChild(option);
                                 });
                             } else {
-                                const option = document.createElement('option');
-                                option.value = "";
-                                option.textContent = "No hay subcategorías disponibles";
-                                subcategorySelect.appendChild(option);
+                                const noSubcategoriesOption = document.createElement('option');
+                                noSubcategoriesOption.value = "";
+                                noSubcategoriesOption.textContent = "No hay subcategorías disponibles";
+                                subcategorySelect.appendChild(noSubcategoriesOption);
                             }
-
-                            applyBorderColorToProducts(color);
-
-                            filterProductsBySubcategory('');
-                        });
-                    });
-
-                    subcategorySelect.addEventListener('change', function () {
-                        const selectedSubcategoryId = this.value;
-                        filterProductsBySubcategory(selectedSubcategoryId);
-                    });
+                        } else {
+                            const defaultOption = document.createElement('option');
+                            defaultOption.value = "";
+                            defaultOption.textContent = "Subcategoría";
+                            defaultOption.disabled = true;
+                            defaultOption.selected = true;
+                            subcategorySelect.appendChild(defaultOption);
+                        }
+                    }
 
                     function applyBorderColorToProducts(color) {
-                        const products = document.querySelectorAll('.product-item');
                         products.forEach(function (product) {
                             product.style.borderLeft = `6px solid ${color}`;
                         });
                     }
 
-                    function filterProductsBySubcategory(subcategoryId) {
-                        const products = document.querySelectorAll('.product-item');
+                    function filterProductsByCategory(categoryId) {
                         products.forEach(function (product) {
-                            if (subcategoryId === '' || product.getAttribute('data-subcategory-id') === subcategoryId) {
+                            const productCategoryId = product.getAttribute('data-category-id');
+                            if (productCategoryId === categoryId) {
+                                product.style.display = 'block';
+                            } else {
+                                product.style.display = 'none';
+                            }
+                        });
+
+                        subcategorySelect.value = '';
+                    }
+
+                    function filterProductsBySubcategory(subcategoryId) {
+                        products.forEach(function (product) {
+                            const productSubcategoryId = product.getAttribute('data-subcategory-id');
+                            if (subcategoryId === '' || productSubcategoryId === subcategoryId) {
                                 product.style.display = 'block';
                             } else {
                                 product.style.display = 'none';
@@ -221,7 +266,7 @@
                     const maxUnits = parseInt(product.getAttribute('data-max-units')) || 0;
 
                     if (maxUnits === 0) {
-                        addButton.disabled = true; // Deshabilitar botón de agregar si no hay unidades
+                        addButton.disabled = true;
                     }
                 });
             });
@@ -232,7 +277,7 @@
         <div>
             <div class="secondary-color lg:mt-0 lg:mb-0 mt-10 mb-8 lg:mx-0 lg:w-full w-[90%] lg:h-auto lg:my-0 lg:ml-0 md:ml-4 xxs:my-8 md:my-8">
                 <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>
-                <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
+                <div id="billing-list" class="grid gap-4 mt-5 mb-5"></div>
                 <hr class="border-b-1 border-white mt-2" />
 
                 <div class="grid grid-cols-2">
@@ -309,7 +354,7 @@
                     <div class="flex justify-center">
                         <button type="submit"
                             class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
-                            <h1 class="font-main text-md">Facturar</h1>
+                            <h1 class="font-main font-semibold text-md">Facturar</h1>
                         </button>
                     </div>
                 </form>
@@ -378,10 +423,20 @@
 
                                 const itemDiv = document.createElement('div');
                                 itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-2';
+
                                 itemDiv.innerHTML = `
-                                <h2>${billing[id].quantity}</h2>
-                                <h2>${billing[id].title}</h2>
-                                <h2>₡${itemTotal.toFixed(2)}</h2>
+                                    <div class="flex justify-center items-center">
+                                        <h2 class="text-center">${billing[id].quantity}</h2>
+                                    </div>
+                                    <!-- Ajustamos para permitir el salto de línea del nombre -->
+                                    <div class="flex justify-start items-center min-w-[150px] max-w-[200px] flex-wrap">
+                                        <h2 class="text-left text-ellipsis overflow-hidden whitespace-normal" title="${billing[id].title}">
+                                            ${billing[id].title}
+                                        </h2>
+                                    </div>
+                                    <div class="flex justify-center items-center">
+                                        <h2 class="text-center">₡${itemTotal.toFixed(2)}</h2>
+                                    </div>
                             `;
                                 billingList.appendChild(itemDiv);
                             }
