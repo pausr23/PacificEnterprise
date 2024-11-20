@@ -9,7 +9,6 @@
         @include('components.sidebar-link')
     </div>
 
-
     <div>
         <div class="grid xxs:ml-6 grid-cols-[70%,20%]">
             <form method="GET" action="{{ route('dishes.inventory') }}" class="grid gap-x-20 grid-cols-3 lg:gap-0 sm:gap-4">
@@ -25,7 +24,7 @@
                     </select>
                 </div>
 
-                <div class="grid lg:ml-0 xxs:ml-12 content-end ">
+                <div class="grid lg:ml-0 xxs:ml-12 content-end">
                     <button type="submit" class="font-bold flex items-center justify-center font-main text-black bg-white h-10 xxs:text-xs xxs:h-10 lg:w-28 md:w-20 xxs:w-20 xxs:p-2 ml-5 mr-5 rounded-xl text-center hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">Buscar</button>
                 </div>
 
@@ -35,37 +34,36 @@
                         <img src="https://i.ibb.co/vQsQx02/7830829-print-text-icon.png" alt="Imprimir" class="h-6 w-6">
                     </button>
                 </div>
-
-
             </form>
         </div>
 
         <div class="lg:w-[90%] lg:grid lg:gap-16 xxs:gap-1">
-            <div class="py-10 rounded-lg ">
-                <table id="dataTable" class="w-full rounded-lg">
-                    <thead class="rounded-lg text-white font-main font-bold secondary-color">
-                        <tr>
-                            <th scope="col" class="rounded-l-lg py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Nombre</th>
-                            <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Categoria</th>
-                            <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Subcategoria</th>
-                            <th scope="col" class="py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Precio Individual</th>
-                            <th scope="col" class="rounded-r-lg py-3 xxs:px-0 lg:text-base xxs:text-[0.5rem]">Unidades</th>
-                        </tr>
-                    </thead>
+            <div class="py-10 rounded-lg">
+                <div class="overflow-x-auto"> 
+                    <table id="dataTable" class="w-full rounded-lg">
+                        <thead class="rounded-lg text-white font-main font-bold secondary-color">
+                            <tr>
+                                <th scope="col" class="rounded-l-lg py-3 xxs:px-2 lg:text-base xxs:text-lg">Nombre</th>
+                                <th scope="col" class="py-3 xxs:px-2 lg:text-base xxs:text-lg hidden lg:block">Categoria</th>
+                                <th scope="col" class="py-3 xxs:px-2 lg:text-base xxs:text-lg">Subcategoria</th>
+                                <th scope="col" class="py-3 xxs:px-2 lg:text-base xxs:text-lg hidden lg:block">Precio Individual</th>
+                                <th scope="col" class="rounded-r-lg py-3 xxs:px-2 lg:text-base xxs:text-lg">Unidades</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        @foreach ($dishes as $dish)
-                        <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-[0.5rem] lg:px-0 xxs:px-0">
-                            <td class="lg:px-3 xxs:px-1 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
-                            <td>{{ $dish->category }}</td>
-                            <td>{{ $dish->subcategory }}</td>
-                            <td>{{ $dish->sale_price }}</td>
-                            <td>{{ $dish->units }}</td>
-                        </tr>
-
-                        @endforeach
-                    </tbody>
-                </table>
+                        <tbody>
+                            @foreach ($dishes as $dish)
+                            <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-sm lg:px-0 xxs:px-2">
+                                <td class="lg:px-3 xxs:px-2 lg:py-3 xxs:py-2">{{ $dish->title }}</td>
+                                <td class="hidden lg:block">{{ $dish->category }}</td>
+                                <td>{{ $dish->subcategory }}</td>
+                                <td class="hidden lg:block">{{ $dish->sale_price }}</td>
+                                <td>{{ $dish->units }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -73,9 +71,7 @@
 
 <script>
     function printTable() {
-
         var printContents = document.getElementById('dataTable').outerHTML;
-
         var printWindow = window.open('', '', 'height=600,width=800');
         
         printWindow.document.write(`
@@ -109,6 +105,5 @@
         printWindow.print();
     }
 </script>
-
 
 @endsection

@@ -14,7 +14,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 10px;
-            width: 40%;
+            width: 60%;
         }
 
         table {
@@ -65,10 +65,10 @@
         <div id="back-button-container" class="flex justify-center mb-10"></div>
 
         <!-- Encabezado con líneas divisorias -->
-        <h1 class="font-bold text-center">Nombre</h1>
-        <h2 class="font-bold text-center">Dirección</h2>
-        <h2 class="font-bold text-center">Correo</h2>
-        <h2 class="font-bold text-center">Teléfono</h2>
+        <h1 class="font-bold text-center">Pacific Enterprise</h1>
+        <h2 class="font-bold text-center">Ferri Tambor lV</h2>
+        <h2 class="font-bold text-center">pacificenterpriselv@gmail.com</h2>
+        <h2 class="font-bold text-center">6171-1424</h2>
   
         <hr> <!-- Línea horizontal después de "Teléfono" -->
 

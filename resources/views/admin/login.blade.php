@@ -87,7 +87,7 @@
         // Mostrar el spinner cuando se envía el formulario
         document.querySelector('form').addEventListener('submit', function (event) {
             document.getElementById('spinner').classList.remove('invisible');
-            document.getElementById('spinner').classList.add('visible');  // Asegurarse que se muestra
+            document.getElementById('spinner').classList.add('visible');
         });
 
     </script>
@@ -246,7 +246,7 @@
 
         /* Spinner oculto */
         .spinner {
-            display: none; /* Ocultamos el spinner por defecto */
+            display: none;
             justify-content: center;
             align-items: center;
             margin-top: 24px;
@@ -254,7 +254,7 @@
 
         /* Mostrar spinner */
         .spinner.visible {
-            display: flex;  /* Lo mostramos solo cuando está activo */
+            display: flex;
         }
 
         /* Estilo del spinner */
@@ -275,7 +275,6 @@
                 transform: rotate(360deg);
             }
         }
-
 
         .hidden {
             display: none;
