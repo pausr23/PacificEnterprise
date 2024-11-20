@@ -74,18 +74,22 @@
                 @endif
 
                 <!-- Loading Spinner -->
-                <div id="spinner" class="spinner hidden">
+                <div id="spinner" class="spinner invisible">
                     <div class="spinner-animation"></div>
                 </div>
+
             </div>
         </div>
     </div>
 
     <!-- Spinner Script -->
     <script>
-        document.querySelector('form').addEventListener('submit', function () {
-            document.getElementById('spinner').classList.remove('hidden');
+        // Mostrar el spinner cuando se envía el formulario
+        document.querySelector('form').addEventListener('submit', function (event) {
+            document.getElementById('spinner').classList.remove('invisible');
+            document.getElementById('spinner').classList.add('visible');  // Asegurarse que se muestra
         });
+
     </script>
 
     <style>
@@ -137,29 +141,11 @@
             }
         }
 
-        /* Media Queries */
         @media (min-width: 768px) {
             .logo-mobile {
                 display: none;
             }
 
-            .image-section {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 24px;
-                height: 100%;
-            }
-        }
-
-        /* Media Queries */
-        @media (min-width: 768px) {
-            /* Ocultar logo móvil en pantallas grandes */
-            .logo-mobile {
-                display: none;
-            }
-
-            /* Imagen en la izquierda solo en escritorio */
             .image-section {
                 display: flex;
                 justify-content: center;
@@ -170,12 +156,10 @@
         }
 
         @media (max-width: 767px) {
-            /* Mostrar logo solo en móvil */
             .logo-mobile {
                 display: flex;
             }
 
-            /* Ocultar imagen en móvil */
             .image-section {
                 display: none;
             }
@@ -260,13 +244,20 @@
             color: #e53e3e;
         }
 
+        /* Spinner oculto */
         .spinner {
-            display: none;
+            display: none; /* Ocultamos el spinner por defecto */
             justify-content: center;
             align-items: center;
             margin-top: 24px;
         }
 
+        /* Mostrar spinner */
+        .spinner.visible {
+            display: flex;  /* Lo mostramos solo cuando está activo */
+        }
+
+        /* Estilo del spinner */
         .spinner-animation {
             width: 24px;
             height: 24px;
@@ -284,6 +275,7 @@
                 transform: rotate(360deg);
             }
         }
+
 
         .hidden {
             display: none;
