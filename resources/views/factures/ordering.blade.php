@@ -16,7 +16,7 @@
             <div class="grid lg:grid-cols-[65%,30%] lg:gap-x-4">
                 <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-sm font-light h-8 text-left text-white lg:w-[95%] md:w-[94%] xxs:w-[87%]"
                     id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
-                    <button id="show-all-btn" class="font-semibold p-2 lg:p-0 mt-8 lg:mt-0 bg-white lg:place-self-end lg:mr-6 rounded-md w-56 lg:h-8 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
+                    <button id="show-all-btn" class="text-white transition duration-150 ease-out hover:ease-in font-semibold p-2 lg:p-0 mt-8 lg:mt-0 lg:place-self-end lg:mr-6 rounded-md w-56 lg:h-8 bg-zinc-700 hover:-translate-y-1 hover:scale-110 hover:bg-zinc-500">
                         Mostrar todos los productos
                     </button>
             </div>
@@ -38,7 +38,7 @@
                 <option value="" disabled selected>Subcategoría</option>
             </select>
 
-            <div id="dishes-list" class="grid lg:grid-cols-4 xxs:grid-cols-1 gap-3 mr-12 md:my-auto products-container overflow-y-auto" style="max-height: 315px;">
+            <div id="dishes-list" class="grid lg:grid-cols-4 xxs:grid-cols-1 gap-3 mr-12 md:my-auto products-container overflow-y-auto">
                 @foreach($dishes as $dish)
                     <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
                         data-dish-id="{{ $dish->id }}"
@@ -275,9 +275,9 @@
         </div>
 
         <div>
-            <div class="secondary-color lg:mt-0 lg:mb-0 mt-10 mb-8 lg:mx-0 lg:w-full w-[90%] lg:h-auto lg:my-0 lg:ml-0 md:ml-4 xxs:my-8 md:my-8">
+            <div class="secondary-color lg:mt-0 lg:mb-0 mt-10 mb-8 lg:mx-0 lg:w-full w-[90%] overflow-hidden h-[90vh] flex flex-col lg:my-0 lg:ml-0 md:ml-4 xxs:my-8 md:my-8">
                 <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>
-                <div id="billing-list" class="grid gap-4 mt-5 mb-5"></div>
+                <div id="billing-list" class="grid products-container gap-4 mt-5 mb-5 overflow-y-auto max-h-[60vh] px-4"></div>
                 <hr class="border-b-1 border-white mt-2" />
 
                 <div class="grid grid-cols-2">
@@ -429,7 +429,7 @@
                                         <h2 class="text-center">${billing[id].quantity}</h2>
                                     </div>
                                     <!-- Ajustamos para permitir el salto de línea del nombre -->
-                                    <div class="flex justify-start items-center min-w-[150px] max-w-[200px] flex-wrap">
+                                    <div class="flex justify-start items-center min-w-[100px] max-w-[200px] flex-wrap">
                                         <h2 class="text-left text-ellipsis overflow-hidden whitespace-normal" title="${billing[id].title}">
                                             ${billing[id].title}
                                         </h2>
