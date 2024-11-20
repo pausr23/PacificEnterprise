@@ -2,89 +2,81 @@
 
 @section('content')
     <!-- Main Container -->
-    <div class="h-screen bg-gradient-to-r from-purple-800 via-purple-600 to-purple-400 relative overflow-hidden">
+    <div class="h-screen bg-gradient-to-r secondary-color flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative">
 
-        <div class="grid md:grid-cols-2 h-screen place-items-center">
-            
-            <!-- Left Image Section -->
+        <!-- Logo Section (Mobile Only) -->
+        <div class="block md:hidden absolute top-0 left-0 right-0 flex justify-center items-center h-1/4">
             <img
-                class="mx-auto w-[65%] hidden md:block transition-transform duration-500 ease-in-out transform hover:scale-105"
+                class="w-64 sm:w-48 md:w-56"
                 src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
                 alt="Pacific-Enterprise"
             />
+        </div>
 
-            <!-- Right Login Section -->
-            <div class="md:grid place-items-center secondary-color w-full h-full px-4">
+        <!-- Content Wrapper -->
+        <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 items-center bg-purple-600 rounded-lg shadow-lg overflow-hidden">
 
-                <!-- Mobile Image -->
+            <!-- Left Image Section -->
+            <div class="hidden md:block p-6">
                 <img
-                    class="mx-auto my-10 block md:hidden w-[50%] transition-transform duration-500 ease-in-out transform hover:scale-110 mb-24"
+                    class="w-full h-auto transition-transform duration-500 ease-in-out transform hover:scale-105"
                     src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
                     alt="Pacific-Enterprise"
                 />
+            </div>
 
-                <div>
-                    <!-- Login Header -->
-                    <h1
-                        class="text-white text-center font-main font-bold text-2xl sm:text-4xl tracking-wide mb-8 animate-bounce"
+            <!-- Right Login Section -->
+            <div class="p-8 md:p-12 bg-gray-50 relative">
+                <!-- Login Header -->
+                <h1 class="text-3xl font-bold text-center text-purple-700 mb-8">
+                    Login
+                </h1>
+
+                <!-- Login Form -->
+                <form class="space-y-6" action="{{ route('admin.login.submit') }}" method="POST">
+                    @csrf
+
+                    <!-- Username Input -->
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="username"
+                            class="w-full py-3 px-4 border border-gray-300 rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500 text-gray-700 placeholder-gray-400"
+                            placeholder="Username"
+                            required
+                        />
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="relative">
+                        <input
+                            type="password"
+                            name="password"
+                            class="w-full py-3 px-4 border border-gray-300 rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500 text-gray-700 placeholder-gray-400"
+                            placeholder="Password"
+                            required
+                        />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                        type="submit"
+                        class="w-full py-3 px-4 bg-purple-600 text-white font-medium rounded-lg shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all"
                     >
                         Login
-                    </h1>
+                    </button>
+                </form>
 
-                    <!-- Login Form -->
-                    <form class="grid gap-6" action="{{ route('admin.login.submit') }}" method="POST">
-                        @csrf
-                        
-                        <!-- Username Input -->
-                        <div class="relative">
-                            <input
-                                class="w-full pl-10 text-base sm:text-lg text-[#CDA0CB] bg-transparent border-b-2 border-[#CDA0CB] placeholder:text-[#bc96ba] focus:outline-none focus:border-purple-400 focus:scale-105 transition-transform duration-300"
-                                placeholder="Username"
-                                type="text"
-                                name="username"
-                                required
-                            >
-                            <svg class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8z" />
-                            </svg>
-                        </div>
-
-                        <!-- Password Input -->
-                        <div class="relative">
-                            <input
-                                class="w-full pl-10 text-base sm:text-lg text-[#CDA0CB] bg-transparent border-b-2 border-[#CDA0CB] placeholder:text-[#bc96ba] focus:outline-none focus:border-purple-400 focus:scale-105 transition-transform duration-300"
-                                placeholder="Password"
-                                type="password"
-                                name="password"
-                                required
-                            >
-                            <!-- Candado SVG -->
-                            <svg class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V7a3 3 0 0 1 3-3zm-6 8h12v8H6v-8z"/>
-                            </svg>
-                        </div>
-
-
-                        <!-- Submit Button -->
-                        <button
-                            type="submit"
-                            class="text-center bg-[#CDA0CB] hover:bg-[#bc96ba] active:bg-[#b080a8] transition-all duration-300 w-full text-sm sm:text-lg font-main font-semibold py-2 rounded-2xl shadow-md hover:shadow-lg transform hover:scale-105"
-                        >
-                            Login
-                        </button>
-                    </form>
-
-                    <!-- Error Message -->
-                    @if ($errors->has('login_error'))
-                        <div class="text-red-500 mt-4 text-center">
-                            {{ $errors->first('login_error') }}
-                        </div>
-                    @endif
-                </div>
+                <!-- Error Message -->
+                @if ($errors->has('login_error'))
+                    <div class="mt-4 text-center text-red-500">
+                        {{ $errors->first('login_error') }}
+                    </div>
+                @endif
 
                 <!-- Loading Spinner -->
-                <div id="spinner" class="hidden justify-center items-center mt-4">
-                    <div class="w-8 h-8 border-4 border-t-transparent border-purple-400 rounded-full animate-spin"></div>
+                <div id="spinner" class="hidden justify-center items-center mt-6">
+                    <div class="w-6 h-6 border-4 border-t-transparent border-purple-600 rounded-full animate-spin"></div>
                 </div>
             </div>
         </div>
