@@ -77,16 +77,9 @@
     }
 }
 
-@media (max-width: 1600px) {
+@media (min-width: 1599px) and (max-width: 1600px) {
     #dishes-list {
       height: 39vh;
-    }
-}
-  
-
-@media (min-width: 1601px) {
-    #dishes-list {
-      height: 49vh;
     }
 }
 
