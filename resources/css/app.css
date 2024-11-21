@@ -77,6 +77,12 @@
     }
 }
 
+@media (min-width: 1599px) and (max-width: 1600px) {
+    #dishes-list {
+      height: 39vh;
+    }
+}
+
 .swiper-button-white {
     color: rgb(215, 215, 215);
 }

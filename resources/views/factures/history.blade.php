@@ -34,7 +34,7 @@
                         <tr>
                             <th scope="col" class="rounded-l-lg px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">ID</th>
                             <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Método de pago</th>
-                            <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Notas</th>
+                            <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem] hidden lg:block">Notas</th>
                             <th scope="col" class="px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Total</th>
                             <th scope="col" class="rounded-r-lg px-1 py-3 xxs:px-0.5 lg:text-base xxs:text-[0.8rem]">Acción</th>
                         </tr>
@@ -45,7 +45,7 @@
                             <tr class="border-b text-white text-center border-neutral-200 dark:border-white/10 lg:text-base xxs:text-xs lg:px-0 xxs:px-0">
                                 <td class="px-2">{{ $order->invoice_number }}</td>
                                 <td class="px-2">{{ $order->payment_method_name }}</td>
-                                <td class="px-1">{{ $order->note }}</td>
+                                <td class="px-1 hidden lg:block">{{ $order->note }}</td>
                                 <td class="px-2">{{ $order->total }}</td>
                                 <td class="py-6 px-2 flex justify-center">
                                     <a class="bg-cyan-200 rounded-lg text-black font-semibold px-4 py-2 me-2 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-100" href="{{ route('factures.show', $order->id) }}">Ver</a>

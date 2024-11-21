@@ -13,53 +13,56 @@
     <div class="grid lg:grid-cols-[65%,30%] lg:ml-0 md:ml-[3%] xxs:grid-cols-1">
 
         <div>
-            <div class="grid">
-                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-xs font-light h-8 text-left text-white lg:w-[95%] md:w-[94%] xxs:w-[87%]"
+            <div class="grid lg:grid-cols-[65%,30%] lg:gap-x-4">
+                <input class="pl-4 mt-6 lg:mt-0 secondary-color rounded text-sm font-light h-8 text-left text-white 2xl:w-[95%] w-[87%]"
                     id="dish" type="text" name="dish" placeholder="Nombre de item" oninput="filterDishes()" />
+                    <button id="show-all-btn" class="text-white text-sm 2xl:text-base transition duration-150 ease-out hover:ease-in font-semibold p-2 lg:p-0 mt-8 lg:mt-0 lg:place-self-end lg:mr-6 rounded-md w-48 2xl:w-56 lg:h-8 bg-zinc-700 hover:-translate-y-1 hover:scale-110 hover:bg-zinc-500">
+                        Mostrar todos los productos
+                    </button>
             </div>
 
-            <div class="grid lg:grid-cols-2 xxs:grid-cols-1 gap-3 mr-12 mt-8">
+            <div class="grid grid-cols-2 gap-3 2xl:gap-y-3 gap-y-3 lg:gap-y-0 mr-12 mt-8">
                 @foreach($categories as $category)
-                    <div class="bg-[#FFFF9F] rounded-md category-button transition-colors duration-200 hover:bg-[#CDA0CB] focus:bg-[#CDA0CB] cursor-pointer"
+                    <div class="bg-[#FFFF9F] 2xl:h-full lg:h-[80%] h-full rounded-md category-button transition-colors duration-200 hover:bg-[#CDA0CB] focus:bg-[#CDA0CB] cursor-pointer"
                         tabindex="0" data-id="{{ $category->id }}" role="button">
-                        <img class="mb-4 ml-5 mt-3 w-8" width="50" height="50"
+                        <img class="2xl:mb-4 mb-2 ml-5 mt-3 lg:w-6 w-8 2xl:w-8" width="50" height="50"
                             src="https://img.icons8.com/ios-filled/50/street-food--v2.png" alt="street-food--v2" />
-                        <h1 class="font-bold ml-5">{{ $category->name }}</h1>
-                        <h2 class="text-xs ml-5 mb-3">{{ $category->registeredDishes->count() }} productos</h2>
+                        <h1 class="font-bold 2xl:text-base text-base lg:text-sm ml-5">{{ $category->name }}</h1>
+                        <h2 class="text-xs ml-5 mb-7 2xl:mb-3">{{ $category->registeredDishes->count() }} productos</h2>
                     </div>
                 @endforeach
             </div>
 
             <select id="subcategory-select"
-                class="text-white font-main my-5 font-semibold text-xl bg-transparent rounded p-2 focus:outline-none">
+                class="text-white font-main my-8 font-semibold 2xl:mt-5 mt-5 lg:mt-0 text-xl bg-transparent rounded focus:outline-none">
                 <option value="" disabled selected>Subcategoría</option>
             </select>
 
-            <div id="dishes-list" class="grid lg:grid-cols-4 xxs:grid-cols-1 gap-3 mr-12 md:my-auto products-container overflow-y-auto" style="max-height: 315px;">
+            <div id="dishes-list" class="grid xxs:grid-cols-2 grid-cols-3 lg:grid-cols-4 gap-x-2 2xl:gap-3 mr-12 md:my-auto products-container h-[30vh] 2xl:h-[49vh] overflow-y-auto">
                 @foreach($dishes as $dish)
-                    <div class="product-item text-white font-main secondary-color rounded-lg pl-3"
+                    <div class="product-item text-white 2xl:h-full h-[90%] font-main secondary-color rounded-lg pl-3"
                         data-dish-id="{{ $dish->id }}"
+                        data-category-id="{{ $dish->dishes_categories_id }}"
                         data-subcategory-id="{{ $dish->subcategories_id }}"
                         data-dish-price="{{ $dish->sale_price }}"
                         data-dish-title="{{ strtolower($dish->title) }}"
                         data-max-units="{{ $dish->units }}"
                         style="border-left: 6px solid #8FC08B;">
-                        <div class="flex flex-col h-full justify-between">
+                        <div class="flex flex-col h-full 2xl:justify-between">
                             <div>
-                                <!-- Subcategoría y unidades disponibles -->
-                                <p class="text-xs font-extralight mt-2 mb-3 flex items-center">
+                                <p class="2xl:text-xs text-[0.6rem] font-extralight mt-2 mb-3 flex items-center">
                                     {{ $dish->subcategory->name }}
-                                    <span id="units-{{ $dish->id }}" class="text-gray-300">(Unidades: {{ $dish->units }})</span>
+                                    <span id="units-{{ $dish->id }}" class="text-gray-300 2xl:ml-2">(Unidades: {{ $dish->units }})</span>
                                 </p>
-                                <h2 class="font-bold text-sm mb-1">{{ $dish->title }}</h2>
-                                <p class="font-extralight text-sm mb-3">₡{{ number_format($dish->sale_price, 2) }}</p>
+                                <h2 class="font-bold text-xs 2xl:text-sm mb-1">{{ $dish->title }}</h2>
+                                <p class="font-extralight text-xs 2xl:text-sm mb-3">₡{{ number_format($dish->sale_price, 2) }}</p>
                             </div>
 
-                            <div class="flex items-center mb-4">
+                            <div class="flex items-center 2xl:mb-4 mb-6">
                                 <button id="add-btn-{{ $dish->id }}"
                                     class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center"
                                     onclick="addProduct('{{ $dish->id }}')">
-                                    <img width="50" height="50"
+                                    <img class="2xl:w-full 2xl:h-full w-[85%]" width="50" height="50"
                                         src="https://img.icons8.com/ios-filled/50/FFFFFF/plus-math.png" alt="plus-math" />
                                 </button>
 
@@ -68,7 +71,7 @@
                                 <button id="remove-btn-{{ $dish->id }}"
                                     class="rounded w-6 border-2 border-white hover:scale-105 focus:outline-none inline-flex items-center justify-center"
                                     onclick="removeProduct('{{ $dish->id }}')" disabled>
-                                    <img width="50" height="50"
+                                    <img class="2xl:w-full 2xl:h-full w-[85%]" width="50" height="50"
                                         src="https://img.icons8.com/ios-filled/50/FFFFFF/minus-math.png" alt="minus-math" />
                                 </button>
                             </div>
@@ -83,8 +86,11 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     const categories = @json($categories);
                     const subcategorySelect = document.getElementById('subcategory-select');
-                    const productsContainer = document.querySelector('.products-container');
+                    const products = document.querySelectorAll('.product-item');
+                    const showAllButton = document.getElementById('show-all-btn');
 
+
+                    const initialBorderColor = '#8FC08B';
                     const colors = ['#FFFF9F', '#CDA0CB', '#B0E1DF', '#F19DB4'];
 
                     document.querySelectorAll('.category-button').forEach(function (categoryDiv, index) {
@@ -95,18 +101,46 @@
                             const categoryId = this.getAttribute('data-id');
                             const selectedCategory = categories.find(category => category.id == categoryId);
 
-                            subcategorySelect.innerHTML = '';
+                            updateSubcategoryMenu(selectedCategory);
 
-                            if (selectedCategory) {
-                                const categoryOption = document.createElement('option');
-                                categoryOption.value = "";
-                                categoryOption.textContent = selectedCategory.name;
-                                categoryOption.disabled = true;
-                                categoryOption.selected = true;
-                                subcategorySelect.appendChild(categoryOption);
-                            }
+                            applyBorderColorToProducts(color);
 
-                            if (selectedCategory && selectedCategory.subcategories.length > 0) {
+                            filterProductsByCategory(categoryId);
+                        });
+                    });
+
+                    showAllButton.addEventListener('click', function () {
+                        subcategorySelect.value = '';
+                        products.forEach(function (product) {
+                            product.style.display = 'block';
+                        });
+
+                        applyBorderColorToProducts(initialBorderColor);
+                    });
+
+                    function applyBorderColorToProducts(color) {
+                        products.forEach(function (product) {
+                            product.style.borderLeft = `6px solid ${color}`;
+                        });
+                    }
+
+                    subcategorySelect.addEventListener('change', function () {
+                        const selectedSubcategoryId = this.value;
+                        filterProductsBySubcategory(selectedSubcategoryId);
+                    });
+
+                    function updateSubcategoryMenu(selectedCategory) {
+                        subcategorySelect.innerHTML = '';
+
+                        if (selectedCategory) {
+                            const categoryOption = document.createElement('option');
+                            categoryOption.value = "";
+                            categoryOption.textContent = selectedCategory.name;
+                            categoryOption.disabled = true;
+                            categoryOption.selected = true;
+                            subcategorySelect.appendChild(categoryOption);
+
+                            if (selectedCategory.subcategories.length > 0) {
                                 selectedCategory.subcategories.forEach(function (subcategory) {
                                     const option = document.createElement('option');
                                     option.value = subcategory.id;
@@ -114,34 +148,44 @@
                                     subcategorySelect.appendChild(option);
                                 });
                             } else {
-                                const option = document.createElement('option');
-                                option.value = "";
-                                option.textContent = "No hay subcategorías disponibles";
-                                subcategorySelect.appendChild(option);
+                                const noSubcategoriesOption = document.createElement('option');
+                                noSubcategoriesOption.value = "";
+                                noSubcategoriesOption.textContent = "No hay subcategorías disponibles";
+                                subcategorySelect.appendChild(noSubcategoriesOption);
                             }
-
-                            applyBorderColorToProducts(color);
-
-                            filterProductsBySubcategory('');
-                        });
-                    });
-
-                    subcategorySelect.addEventListener('change', function () {
-                        const selectedSubcategoryId = this.value;
-                        filterProductsBySubcategory(selectedSubcategoryId);
-                    });
+                        } else {
+                            const defaultOption = document.createElement('option');
+                            defaultOption.value = "";
+                            defaultOption.textContent = "Subcategoría";
+                            defaultOption.disabled = true;
+                            defaultOption.selected = true;
+                            subcategorySelect.appendChild(defaultOption);
+                        }
+                    }
 
                     function applyBorderColorToProducts(color) {
-                        const products = document.querySelectorAll('.product-item');
                         products.forEach(function (product) {
                             product.style.borderLeft = `6px solid ${color}`;
                         });
                     }
 
-                    function filterProductsBySubcategory(subcategoryId) {
-                        const products = document.querySelectorAll('.product-item');
+                    function filterProductsByCategory(categoryId) {
                         products.forEach(function (product) {
-                            if (subcategoryId === '' || product.getAttribute('data-subcategory-id') === subcategoryId) {
+                            const productCategoryId = product.getAttribute('data-category-id');
+                            if (productCategoryId === categoryId) {
+                                product.style.display = 'block';
+                            } else {
+                                product.style.display = 'none';
+                            }
+                        });
+
+                        subcategorySelect.value = '';
+                    }
+
+                    function filterProductsBySubcategory(subcategoryId) {
+                        products.forEach(function (product) {
+                            const productSubcategoryId = product.getAttribute('data-subcategory-id');
+                            if (subcategoryId === '' || productSubcategoryId === subcategoryId) {
                                 product.style.display = 'block';
                             } else {
                                 product.style.display = 'none';
@@ -221,7 +265,7 @@
                     const maxUnits = parseInt(product.getAttribute('data-max-units')) || 0;
 
                     if (maxUnits === 0) {
-                        addButton.disabled = true; // Deshabilitar botón de agregar si no hay unidades
+                        addButton.disabled = true;
                     }
                 });
             });
@@ -230,13 +274,13 @@
         </div>
 
         <div>
-            <div class="secondary-color lg:mt-0 lg:mb-0 mt-10 mb-8 lg:mx-0 lg:w-full w-[90%] lg:h-auto lg:my-0 lg:ml-0 md:ml-4 xxs:my-8 md:my-8">
+            <div class="secondary-color lg:mt-0 lg:mb-0 mt-10 mb-8 lg:mx-0 lg:w-full w-[90%] overflow-hidden h-[90vh] flex flex-col lg:my-0 lg:ml-0 md:ml-4 xxs:my-8 md:my-8">
                 <h2 class="text-white font-main font-semibold text-lg pt-4 text-center">Facturación</h2>
-                <div id="billing-list" class="grid place-items-center mt-5 mb-5"></div>
+                <div id="billing-list" class="grid products-container gap-4 mt-5 mb-5 overflow-y-auto max-h-[60vh] px-4"></div>
                 <hr class="border-b-1 border-white mt-2" />
 
                 <div class="grid grid-cols-2">
-                    <h2 class="text-white font-main font-semibold text-lg ml-5 mt-5">Total</h2>
+                    <h2 class="text-white font-main font-semibold 2xl:text-lg ml-5 mt-5">Total</h2>
                     <h3 id="total-amount" class="text-white text-xs font-semibold ml-5 mt-6 text-center font-main">₡0
                     </h3>
                 </div>
@@ -247,19 +291,19 @@
                     <input type="hidden" name="payment_method_id" id="paymentMethodInput" value="">
 
                     <div class="grid grid-cols-1 mb-2">
-                        <label class="text-gray-400 text-sm ml-5 font-main mt-5 mb-5">Notas:</label>
-                        <textarea
-                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-2 text-white md:w-[80%] xxs:w-[86%] mx-auto"
-                            name="note" cols="30" rows="3" placeholder="Notas adicionales"></textarea>
+                        <label class="text-gray-400 text-xs 2xl:text-sm ml-5 font-main my-3 2xl:my-5 ">Notas:</label>
+                        <textarea class="secondary-color border border-gray-300 2xl:text-sm text-xs rounded-lg block p-2 text-white mx-auto w-[80%] 2xl:w-[90%] h-12 2xl:h-20"
+                        name="note"
+                        placeholder="Notas adicionales"></textarea>
                     </div>
 
-                    <h2 class="text-gray-400 text-sm ml-5 font-main mt-5">Método de Pago:</h2>
+                    <h2 class="text-gray-400 text-xs 2xl:text-sm ml-5 font-main mt-5">Método de Pago:</h2>
                     <div class="flex justify-around p-4">
                         <div class="group">
                             <button type="button"
                                 class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2"
                                 data-value="1">
-                                <img class="w-8" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png"
+                                <img class="2xl:w-8 w-7" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/banknotes.png"
                                     alt="banknotes" />
                             </button>
                             <h2 class="text-white text-xs text-center mt-1 font-main">Efectivo</h2>
@@ -269,7 +313,7 @@
                             <button type="button"
                                 class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2"
                                 data-value="2">
-                                <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png"
+                                <img class="2xl:w-8 w-7" src="https://img.icons8.com/ios-filled/50/FFFFFF/credit-card-front.png"
                                     alt="credit-card-front" />
                             </button>
                             <h2 class="text-white text-xs text-center mt-1 font-main">Tarjeta</h2>
@@ -279,37 +323,37 @@
                             <button type="button"
                                 class="payment-method border border-white rounded-lg transition-colors duration-200 hover:border-white-500 focus:border-green-500 p-2"
                                 data-value="3">
-                                <img class="w-8" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png"
+                                <img class="2xl:w-8 w-7" src="https://img.icons8.com/ios-filled/50/FFFFFF/mobile-payment.png"
                                     alt="mobile-payment" />
                             </button>
                             <h2 class="text-white text-xs text-center mt-1 font-main">Sinpe</h2>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 mt-5" id="payment-amount-section" style="display: none;">
-                        <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Monto recibido:</label>
+                    <div class="grid grid-cols-2 mt-2 2xl:mt-5" id="payment-amount-section" style="display: none;">
+                        <label class="text-gray-400 text-xs 2xl:text-sm ml-5 2xl:mt-2 font-main">Monto recibido:</label>
                         <input id="customer-payment" type="number"
-                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-2.5 text-white w-36"
+                            class="secondary-color border border-gray-300 text-xs 2xl:text-sm rounded-lg block p-1 2xl:p-2 text-white w-[80%] 2xl:w-36"
                             placeholder="Monto" />
                     </div>
 
-                    <div class="grid grid-cols-2 mt-5" id="change-section" style="display: none;">
-                        <label class="text-gray-400 text-sm ml-5 mt-2 font-main">Cambio:</label>
+                    <div class="grid grid-cols-2 2xl:mt-5 mt-2" id="change-section" style="display: none;">
+                        <label class="text-gray-400 text-xs 2xl:text-sm ml-5 mt-2 font-main">Cambio:</label>
                         <h3 id="change-amount" class="text-white text-xs font-semibold ml-5 mt-2 text-center font-main">
                             ₡0</h3>
                     </div>
 
                     <div id="voucher-section" class="grid grid-cols-1 mb-2" style="display: none;">
-                        <label id="voucher-label" for="voucher-number" class="text-gray-400 text-sm ml-8 font-main mt-5 mb-5">Número de Comprobante:</label>
+                        <label id="voucher-label" for="voucher-number" class="text-gray-400 text-xs 2xl:text-sm ml-8 font-main ">Número de Comprobante:</label>
                         <input type="text" id="voucher-number" name="voucher_number"
-                            class="secondary-color border border-gray-300 text-sm rounded-lg block p-2 text-white lg:w-70 md:w-[80%] xxs:w-[86%] mx-auto"
+                            class="secondary-color border border-gray-300 2xl:text-sm text-xs rounded-lg my-2 2xl:my-5 block p-1 2xl:p-2 text-white w-[80%] 2xl:w-36 mx-auto"
                             placeholder="Número" />
                     </div>
 
                     <div class="flex justify-center">
                         <button type="submit"
                             class="bg-white rounded-md w-56 h-8 mt-5 mb-5 hover:bg-gray-200 active:bg-gray-300 transition duration-150">
-                            <h1 class="font-main text-md">Facturar</h1>
+                            <h1 class="font-main font-semibold text-md">Facturar</h1>
                         </button>
                     </div>
                 </form>
@@ -377,11 +421,21 @@
                                 total += itemTotal;
 
                                 const itemDiv = document.createElement('div');
-                                itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-2';
+                                itemDiv.className = 'grid grid-cols-3 text-white font-main text-xs gap-x-5 mb-1 2xl:mb-2';
+
                                 itemDiv.innerHTML = `
-                                <h2>${billing[id].quantity}</h2>
-                                <h2>${billing[id].title}</h2>
-                                <h2>₡${itemTotal.toFixed(2)}</h2>
+                                    <div class="flex justify-center items-center">
+                                        <h2 class="text-center">${billing[id].quantity}</h2>
+                                    </div>
+
+                                    <div class="flex justify-start items-center min-w-[100px] max-w-[200px] flex-wrap">
+                                        <h2 class="text-left text-ellipsis overflow-hidden whitespace-normal" title="${billing[id].title}">
+                                            ${billing[id].title}
+                                        </h2>
+                                    </div>
+                                    <div class="flex justify-center items-center">
+                                        <h2 class="text-center">₡${itemTotal.toFixed(2)}</h2>
+                                    </div>
                             `;
                                 billingList.appendChild(itemDiv);
                             }
