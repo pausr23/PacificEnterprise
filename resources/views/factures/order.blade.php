@@ -9,10 +9,10 @@
     </div>
 
     <!-- Content Area -->
-    <div class="xxs:mx-auto">
-        <div class="grid lg:grid-cols-3 gap-[1rem] w-full h-full p-4 lg:mt-0 md:mt-[1%] lg:ml-0 md:ml-[1%] xxs:mt-[1%]">
+    <div class="xxs:mx-auto ">
+    <div class="grid lg:grid-cols-3 gap-[1rem] w-full h-full p-4 lg:mt-0 md:mt-[1%] lg:ml-0 md:ml-[1%] xxs:mt-[1%] sm:justify-center ">
             @foreach($transactions as $transactionId => $transaction)
-                <div class="flex flex-col flex-shrink-0 w-[80%] xxs:w-64 h-full rounded-lg bg-[#2d2d2D] text-white p-4">
+                <div class="flex flex-col flex-shrink-0 lg:w-[80%] sm:w-[70vw] xxs:w-64 h-full rounded-lg bg-[#2d2d2D] text-white p-4">
                     <p class="text-lg font-bold mb-4">Orden #{{ $transactionId }}</p>
                     <div class="border-t border-gray-400 w-full"></div>
                     <div class="overflow-y-auto scrollbar-hide h-[80%]">
