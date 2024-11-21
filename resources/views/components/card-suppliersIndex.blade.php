@@ -1,4 +1,4 @@
-<div class="py-4 rounded-lg secondary-color text-white p-3 mt-5 flex flex-col lg:w-[300px] md:w-[90%]">
+<div class="py-4 rounded-lg secondary-color text-white p-3 mt-5 flex flex-col lg:w-[300px] sm:w-[95%]">
     <div class="grid lg:grid-cols-3 items-center">
         <div class="text-center">
             <h2 class="font-bold text-sm">{{ $supplier->name }}</h2>
