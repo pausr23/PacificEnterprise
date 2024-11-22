@@ -9,7 +9,7 @@
     </div>
 
     <div>
-        <div class="grid grid-cols-[70%,20%] mt-8 lg:mt-0 lg:ml-0 xxs:ml-[9%] xxs:grid-cols-1 xxs:gap-y-4">
+        <div class="grid grid-cols-[70%,20%] mt-8 lg:mt-0 lg:ml-0 xxs:mx-auto xxs:grid-cols-1 xxs:gap-y-4">
             @include('components.search-suppliersIndex', ['action' => route('suppliers.index')])
 
             <div class="content-end xxs:content-center">
