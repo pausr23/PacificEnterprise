@@ -10,7 +10,7 @@
     </div>
 
     <div>
-        <div class="grid xxs:ml-6 grid-cols-[70%,20%]">
+        <div class="grid xxs:ml-6 lg:ml-auto sm:ml-10 grid-cols-[70%,20%]">
             <form method="GET" action="{{ route('dishes.inventory') }}" class="grid gap-x-20 grid-cols-3 lg:gap-0 sm:gap-4">
                 <div class="grid">
                     <label class="xxs:mt-8 my-0 md:text-lg text-white lg:mt-0 md:mt-[18%] lg:ml-0 md:ml-[11%] lg:text-base sm:text-xs font-main lg:pb-2 font-bold" for="category">Filtrar por:</label>
