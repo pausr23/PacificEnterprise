@@ -64,17 +64,20 @@
         <!-- Tabla con los detalles de los productos -->
         <div id="back-button-container" class="flex justify-center mb-10"></div>
 
-        <!-- Encabezado con líneas divisorias -->
-        <h1 class="font-bold text-center">Pacific Enterprise</h1>
-        <h2 class="font-bold text-center">Ferri Tambor lV</h2>
-        <h2 class="font-bold text-center">pacificenterpriselv@gmail.com</h2>
-        <h2 class="font-bold text-center">6171-1424</h2>
-  
-        <hr> <!-- Línea horizontal después de "Teléfono" -->
+        <div class="bg-neutral-100">
+            <!-- Encabezado con líneas divisorias -->
+            <h1 class="font-bold text-center">Pacific Enterprise</h1>
+            <h2 class="font-bold text-center">Ferri Tambor lV</h2>
+            <h2 class="font-bold text-center">pacificenterpriselv@gmail.com</h2>
+            <h2 class="font-bold text-center">6171-1424</h2>
+    
+            <hr> <!-- Línea horizontal después de "Teléfono" -->
 
-        <h2 class="font-bold mt-2 mb-2">Número de factura:</h2>
+            <h2 class="font-bold mt-2 mb-2">Número de factura: {{ $invoiceNumber }}</h2>
 
-        <hr> <!-- Línea horizontal después de "Teléfono" -->
+            <hr> <!-- Línea horizontal después de "Teléfono" -->
+
+        </div>
 
         <table>
             <thead>

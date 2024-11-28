@@ -9,7 +9,7 @@
             <!-- Left Image Section -->
             <img
                 class="mx-auto w-[65%] hidden md:block transition-transform duration-500 ease-in-out transform hover:scale-105"
-                src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
+                src="https://i.ibb.co/5jgz4Gw/Logo-Dark-2.png"
                 alt="Pacific-Enterprise"
             />
 

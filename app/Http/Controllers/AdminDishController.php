@@ -374,7 +374,7 @@ class AdminDishController extends Controller
         $filePath = self::INVOICE_PATH . $invoiceNumber . self::PDF_EXTENSION;
         file_put_contents(public_path($filePath), $output);
 
-        return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath'));
+        return view('factures.invoice', compact('addedItemsWithDetails', 'paymentMethodId', 'total', 'filePath', 'invoiceNumber'));
     }
 
     public function showOrderInKitchen()
