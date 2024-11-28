@@ -24,22 +24,17 @@
             Atrás
         </a>
 
-        <!-- Información del Proveedor -->
-        <div class="grid container py-8 rounded-xl secondary-color mx-auto w-[50%] xxs:w-[90%] text-center text-white mt-5 xxs:my-6">
-            <h1 class="text-2xl mb-6 font-bold">{{ $supplier->name }}</h1>
-
-            <!-- Descripción y Detalles del Proveedor -->
-            <div class="mt-4 text-white">
-                @foreach ([
-                    'Número de teléfono' => $supplier->phone_number,
-                    'Correo electrónico' => $supplier->email ?? 'No proporcionado',  {{-- Muestra un valor por defecto si no hay email --}}
-                    'Notas adicionales' => $supplier->note ?? 'No hay notas disponibles'
-                ] as $label => $value)
-                    <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4">
-                        <strong>{{ $label }}:</strong> {{ $value }}
-                    </p>
-                @endforeach
-            </div>
+        <!-- Descripción y Detalles del Proveedor -->
+        <div class="mt-4 text-white">
+            @foreach ([
+                'Número de teléfono' => $supplier->phone_number,
+                'Correo electrónico' => $supplier->email ?? 'No proporcionado',  
+                'Notas adicionales' => $supplier->note ?? 'No hay notas disponibles'
+            ] as $label => $value)
+                <p class="text-lg mb-3 border-b border-gray-500 pb-2 mx-auto w-3/4">
+                    <strong>{{ $label }}:</strong> {{ $value }}
+                </p>
+            @endforeach
         </div>
     </div>
 </div>

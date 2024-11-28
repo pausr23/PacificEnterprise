@@ -1,4 +1,4 @@
-<div class="md:mr-5 hidden lg:block">
+<div class="fixed md:mr-5 hidden lg:block">
     <img class="2xl:mb-4 w-44 2xl:w-60 sm:ml-0" src="https://i.ibb.co/KX69vv5/Pacific-Enterprise.png"
         alt="Pacific-Enterprise">
 

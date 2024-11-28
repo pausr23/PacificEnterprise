@@ -56,7 +56,6 @@
                 ])
 
                 @include('information.partials.input', [
-<<<<<<< HEAD
                     'label' => 'Número', 
                     'name' => 'number', 
                     'type' => 'text', 
@@ -64,13 +63,6 @@
                     'placeholder' => 'Número de teléfono',
                     'minlength' => 8,
                     'maxlength' => 8
-=======
-                    'label' => 'Número',
-                    'name' => 'number',
-                    'type' => 'text',
-                    'value' => $information->number,
-                    'placeholder' => 'Número de teléfono'
->>>>>>> 142c14008740bbf67590cfe3bef95d7e41872f7e
                 ])
             </div>
 

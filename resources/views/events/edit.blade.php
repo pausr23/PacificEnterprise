@@ -12,7 +12,7 @@
         </div>
     @endif
 
-<div class="grid lg:grid-cols-[20%,80%] lg:pl-6 pl-20">
+<div class="grid lg:grid-cols-[20%,80%] lg:pl-6">
 
     <!-- Menú lateral -->
     <div class="mr-5">
@@ -62,7 +62,7 @@
                             name="image">
                         
                     </div>
-                    <div class="flex mt-6 ">
+                    <div class="flex mt-6 xxs:justify-center">
                         <button type="submit"
                             class="font-main text-white w-[30%] secondary-color hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 mr-2 xxs:text-xs text-center">Actualizar
                             Evento</button>

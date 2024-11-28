@@ -1,7 +1,7 @@
 @extends('dishes.layout')
 
 @section('content')
-<div class="grid lg:grid-cols-[20%,80%] lg:pl-6 pl-20">
+<div class="grid lg:grid-cols-[20%,80%] lg:pl-6">
 
     <!-- Menú lateral -->
     <div class="mr-5">
@@ -29,7 +29,7 @@
                 @include('dishes.partials.dish-form-edit', ['dish' => $dish, 'categories' => $categories, 'subcategories' => $subcategories])
             </div>
             <div class="flex justify-end xxs:justify-center xxs:ml-16 pr-20 mt-5">
-                <button type="submit" class="font-main text-white w-full lg:w-[9%] md:[12%] sm:w-[16%] max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Actualizar</button>
+                <button type="submit" class="font-main text-white w-full lg:w-[9%] md:[12%] sm:w-[16%] max-w-[300px] secondary-color hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg px-4 py-2.5 md:pr-4 md:-pl-4 text-center lg:mr-60 md:mr-0 sm:mr-1 mb-10">Actualizar</button>
             </div>
         </form>
 

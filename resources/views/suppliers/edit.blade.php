@@ -1,7 +1,7 @@
 @extends('suppliers.layout')
 
 @section('content')
-<div class="grid lg:grid-cols-[20%,80%] lg:pl-6 pl-20">
+<div class="grid lg:grid-cols-[20%,80%] lg:pl-6">
 
     <!-- Menú lateral -->
     <div class="mr-5">
@@ -35,43 +35,14 @@
             @csrf
             @method('PUT')
             
-            <div class="pl-20 grid grid-cols-[50%,50%] xxs:grid-cols-1 xxs:justify-items-center xxs:pl-4 xxs:ml-[-4%]">
-                
-                {{-- First Column --}}
-                <div class="grid">
-                    @include('components.input-suppliersEdit', [
-                        'label' => 'Nombre',
-                        'name' => 'name',
-                        'value' => old('name', $supplier->name),  {{-- Usamos old() para mantener los valores si el formulario tiene errores --}}
-                        'placeholder' => 'Nombre del proveedor'
-                    ])
-
-                    @include('components.input-suppliersEdit', [
-                        'label' => 'Número de teléfono',
-                        'name' => 'phone_number',
-                        'value' => old('phone_number', $supplier->phone_number),
-                        'placeholder' => 'Número de teléfono del proveedor',
-                        'minlength' => 8,  
-                        'maxlength' => 8
-                    ])
-                </div>
-
-                {{-- Second Column --}}
-                <div>
-                    @include('components.input-suppliersEdit', [
-                        'label' => 'Correo electrónico',
-                        'name' => 'email',
-                        'value' => old('email', $supplier->email),
-                        'placeholder' => 'Correo electrónico del proveedor'
-                    ])
-
-                    @include('components.textarea-suppliersEdit', [
-                        'label' => 'Notas Adicionales',
-                        'name' => 'note',
-                        'value' => old('note', $supplier->note),
-                        'placeholder' => 'Notas adicionales del proveedor'
-                    ])
-                </div>
+            {{-- First Column --}}
+            <div class="grid">
+                @include('components.input-suppliersEdit', [
+                    'label' => 'Nombre',
+                    'name' => 'name',
+                    'value' => old('name', $supplier->name),  
+                    'placeholder' => 'Nombre del proveedor'
+                ])
 
             </div>
 
