@@ -20,7 +20,7 @@ class UsersController extends Controller
         $this->validateLogin($request);
 
         if (Auth::attempt($request->only('username', 'password'))) {
-            return redirect()->route('dashboard.principal');
+            return redirect()->route('dishes.store');
         }
 
         return redirect()->route('admin.login')->withErrors(['login_error' => 'Credenciales incorrectas.']);
